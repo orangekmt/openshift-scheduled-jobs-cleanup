@@ -51,8 +51,7 @@ objects:
     source: 
       type: "Git"
       git:
-        uri: "https://github.com/ludopif/openshift-scheduledjobs-cleanup.git"
-    strategy: 
+        uri: "${SOURCE_REPOSITORY_URL}"
       type: "Docker"
     output: 
       to:
@@ -79,5 +78,9 @@ objects:
 parameters:
 - description: Project Name used to create the RoleBindings
   name: PROJECT_NAME
+- name: "SOURCE_REPOSITORY_URL"
+  displayName: "Git Repository URL"
+  description: "The URL of the repository with your application source code."
+  value: "https://github.com/orangekmt/openshift-scheduled-jobs-cleanup.git"
 labels:
   schjobs-cleanup: template
