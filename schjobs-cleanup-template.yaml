@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: scheduled-jobs-cleanup-template
+  annotations:
+    description: "Create a cleanup scheduledjobs to remove scheduedjobs history in a project"
+objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: scheduled-jobs-cleanup
+- apiVersion: v1
+  kind: RoleBinding
+  metadata:
+    name: 'system:scheduled-jobs-cleanup'
+  userNames:
+    - 'system:serviceaccount:${PROJECT_NAME}:scheduled-jobs-cleanup'
+  groupNames: null
+  subjects:
+    -
+      kind: SystemUser
+      namespace: ${PROJECT_NAME}
+      name: 'system:serviceaccounts:${PROJECT_NAME}:scheduled-jobs-cleanup'
+  roleRef:
+    name: 'kermit-user'
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: "scheduled-jobs-cleanup"
+    labels:
+      app: "scheduled-jobs-cleanup"
+    annotations:
+      description: "Resulting Docker Image after the build of my scheduled job."
+  spec:
+    tags:
+      -
+        tag: latest
+- apiVersion: "v1"
+  kind: "BuildConfig"
+  metadata:
+    name: "scheduledjob-cleanup-build" 
+  spec:
+    spec:
+    triggers:
+      -
+        type: ImageChange
+        imageChange: {}
+      -
+        type: ConfigChange
+    runPolicy: "Serial" 
+    source: 
+      type: "Git"
+      git:
+        uri: "https://github.com/ludopif/openshift-scheduledjobs-cleanup.git"
+    strategy: 
+      type: "Docker"
+    output: 
+      to:
+        kind: "ImageStreamTag"
+        name: "scheduled-jobs-cleanup:latest"
+- apiVersion: batch/v2alpha1
+  kind: ScheduledJob
+  metadata:
+    name: scheduled-jobs-cleanup
+  spec:
+    # every day at 3.30
+    schedule: '*/1 * * * ?'
+    jobTemplate:
+      spec:
+        template:
+          spec:
+            # 10 minutes timeout
+            activeDeadlineSeconds: 600
+            serviceAccountName: scheduled-jobs-cleanup
+            containers:
+            - name: scheduled-jobs-cleanup
+              image: 172.30.97.45:5000/${PROJECT_NAME}/scheduled-jobs-cleanup:latest
+            restartPolicy: OnFailure
+parameters:
+- description: Project Name used to create the RoleBindings
+  name: PROJECT_NAME
+labels:
+  schjobs-cleanup: template
