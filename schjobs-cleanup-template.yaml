@@ -64,7 +64,7 @@ objects:
     name: scheduled-jobs-cleanup
   spec:
     # every day at 3.30
-    schedule: '*/1 * * * ?'
+    schedule: ${SCHEDULE_VALUE}
     jobTemplate:
       spec:
         template:
@@ -83,5 +83,9 @@ parameters:
   displayName: "Git Repository URL"
   description: "The URL of the repository with your application source code."
   value: "https://github.com/orangekmt/openshift-scheduled-jobs-cleanup.git"
+- name: SCHEDULE_VALUE
+  description: "Value to set for the schedule (cron format)"
+  displayName: " Value for the Schedule"
+  value: '*/1 * * * ?'
 labels:
   schjobs-cleanup: template
