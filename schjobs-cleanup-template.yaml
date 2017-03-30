@@ -74,7 +74,7 @@ objects:
             serviceAccountName: scheduled-jobs-cleanup
             containers:
             - name: scheduled-jobs-cleanup
-              image: 172.30.97.45:5000/${PROJECT_NAME}/scheduled-jobs-cleanup:latest
+              image: 172.30.220.103:5000/${PROJECT_NAME}/scheduled-jobs-cleanup:latest
             restartPolicy: OnFailure
 parameters:
 - description: Project Name used to create the RoleBindings
