@@ -4,7 +4,7 @@ export KUBECONFIG=/tmp/.kube
 
 set -e
 
-#DEFAULT_NAMESPACE=$(eval cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+DEFAULT_NAMESPACE=$(eval cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
 
 oc login https://$KUBERNETES_PORT_443_TCP_ADDR:$KUBERNETES_SERVICE_PORT_HTTPS \
   --token `cat /var/run/secrets/kubernetes.io/serviceaccount/token` \
