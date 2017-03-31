@@ -20,7 +20,7 @@ do
 
     if [ ${SUCCESSFUL_RUN} == "1" ]; then
       START=`oc get job -n abcd1234 -o yaml | grep -i "startTime:" | awk '{print $2}'`
-      START_TIMESTAMP=`date -d "$START" +%s`
+      START_TIMESTAMP=`date -d '$START' +%s`
       CURRENT_DATE=`date +%s`
       echo "start:" $START_TIMESTAMP
       echo "date:" $CURRENT_DATE
