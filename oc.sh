@@ -21,10 +21,10 @@ do
     if [ ${SUCCESSFUL_RUN} == "1" ]; then
       START=`oc get job -n abcd1234 -o yaml | grep -i "startTime:" | awk '{print $2}'`
       START_TIMESTAMP=`date -d "$START" +%s`
-      DATE=`date +%s`
+      CURRENT_DATE=`date +%s`
       echo "start:" $START_TIMESTAMP
-      echo "date:" $DATE
-      DURATION=`expr $DATE - $START_TIMESTAMP`
+      echo "date:" $CURRENT_DATE
+      DURATION=`expr $CURRENT_DATE - $START_TIMESTAMP`
         if [[ $DURATION > $1 ]] ;
           then
             echo "Successfully ended job \"${JOB}\", delete it"
