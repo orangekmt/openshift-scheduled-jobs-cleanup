@@ -20,7 +20,6 @@ do
 
     if [ ${SUCCESSFUL_RUN} == "1" ]; then
       START=`oc get job $JOB -n ${DEFAULT_NAMESPACE} -o yaml | grep -i "startTime:" | awk '{print $2}'`
-      echo "START Value:" $START
       START_TIMESTAMP=`date -d $START +%s`
       CURRENT_DATE=`date +%s`
       echo "start:" $START_TIMESTAMP
