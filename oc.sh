@@ -19,10 +19,10 @@ do
     SUCCESSFUL_RUN=$(eval echo "${JOB_WITH_STATS}" | awk '{print $3}')
 
     if [ ${SUCCESSFUL_RUN} == "1" ]; then
+      echo "Checking Job:" $JOB
       START=`oc get job $JOB -n ${DEFAULT_NAMESPACE} -o yaml | grep -i "startTime:" | awk '{print $2}'`
       START_TIMESTAMP=`date -d $START +%s`
       CURRENT_DATE=`date +%s`
-      #echo "start:" $START_TIMESTAMP
       #echo "date:" $CURRENT_DATE
       DURATION=`expr $CURRENT_DATE - $START_TIMESTAMP`
       echo "duration calculated:" $DURATION
