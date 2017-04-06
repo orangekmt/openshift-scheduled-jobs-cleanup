@@ -23,7 +23,6 @@ do
       START=`oc get job $JOB -n ${DEFAULT_NAMESPACE} -o yaml | grep -i "startTime:" | awk '{print $2}'`
       START_TIMESTAMP=`date -d $START +%s`
       CURRENT_DATE=`date +%s`
-      #echo "date:" $CURRENT_DATE
       DURATION=`expr $CURRENT_DATE - $START_TIMESTAMP`
       echo "duration calculated:" $DURATION
       echo "duration set by user:" $1 
