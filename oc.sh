@@ -27,7 +27,7 @@ do
       DURATION=`expr $CURRENT_DATE - $START_TIMESTAMP`
       echo "duration calculated:" $DURATION
       echo "duration set by user:" $1 
-        if [[ $DURATION > $1 ]] ;
+        if [[ $DURATION -gt $1 ]] ;
           then
             echo "Successfully ended job \"${JOB}\", delete it"
             oc delete job ${JOB} -n ${DEFAULT_NAMESPACE}
