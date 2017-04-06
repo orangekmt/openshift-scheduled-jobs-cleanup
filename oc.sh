@@ -34,6 +34,6 @@ do
             echo "not to delete"
           fi
     else
-      echo "\"${JOB}\" not successfully ended"
+      echo "\"${JOB}\" not successfully ended, not to delete"
     fi
 done < /tmp/jobs-without-header
