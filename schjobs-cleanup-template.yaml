@@ -84,7 +84,7 @@ parameters:
 - description: The URL of the repository with your application source code.
   displayName: Git Repository URL
   name: SOURCE_REPOSITORY_URL
-  value: https://github.com/ludopif/openshift-scheduled-jobs-cleanup.git
+  value: https://github.com/orangekmt/openshift-scheduled-jobs-cleanup.git
 - description: Value to set for the schedule (cron format)
   displayName: ' Value for the Schedule'
   name: SCHEDULE_VALUE
