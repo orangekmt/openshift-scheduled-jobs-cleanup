@@ -81,6 +81,7 @@ objects:
 parameters:
 - description: Project Name used to create the RoleBindings
   name: PROJECT_NAME
+  required: true
 - description: The URL of the repository with your application source code.
   displayName: Git Repository URL
   name: SOURCE_REPOSITORY_URL
@@ -89,6 +90,6 @@ parameters:
   displayName: ' Value for the Schedule'
   name: SCHEDULE_VALUE
   value: '*/1 * * * ?'
-- description: Duration set by user in SECONDS. Jobs older than this duration will
-    be deleted.
+- description: Duration set by user in SECONDS. Jobs older than this duration will be deleted.
   name: USER_DURATION
+  value: "600"
