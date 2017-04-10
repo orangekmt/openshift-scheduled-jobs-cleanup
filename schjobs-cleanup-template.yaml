@@ -73,7 +73,7 @@ objects:
           spec:
             activeDeadlineSeconds: 600
             containers:
-            - image: 172.30.97.45:5000/${PROJECT_NAME}/scheduled-jobs-cleanup:latest
+            - image: 172.30.220.103:5000/${PROJECT_NAME}/scheduled-jobs-cleanup:latest
               name: scheduled-jobs-cleanup
             restartPolicy: OnFailure
             serviceAccountName: scheduled-jobs-cleanup
