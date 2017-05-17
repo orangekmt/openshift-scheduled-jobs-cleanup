@@ -6,6 +6,7 @@ metadata:
   annotations:
     description: Create a cleanup scheduledjobs to remove scheduledjobs history in
       a project
+    tags: "kermit,kermit-tooling"
   creationTimestamp: null
   name: scheduledjobs-cleanup
 objects:
