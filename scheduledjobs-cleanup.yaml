@@ -1,51 +1,51 @@
 apiVersion: v1
 kind: Template
 labels:
-  schjobs-cleanup: template
+  scheduledjobs-cleanup: template
 metadata:
   annotations:
     description: Create a cleanup scheduledjobs to remove scheduledjobs history in
       a project
   creationTimestamp: null
-  name: scheduled-jobs-cleanup-template
+  name: scheduledjobs-cleanup
 objects:
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
-    name: scheduled-jobs-cleanup
+    name: scheduledjobs-cleanup
 - apiVersion: v1
   groupNames: null
   kind: RoleBinding
   metadata:
-    name: system:scheduled-jobs-cleanup
+    name: system:scheduledjobs-cleanup
   roleRef:
     name: kermit-user
   subjects:
   - kind: SystemUser
-    name: system:serviceaccounts:${PROJECT_NAME}:scheduled-jobs-cleanup
+    name: system:serviceaccounts:${PROJECT_NAME}:scheduledjobs-cleanup
     namespace: ${PROJECT_NAME}
   userNames:
-  - system:serviceaccount:${PROJECT_NAME}:scheduled-jobs-cleanup
+  - system:serviceaccount:${PROJECT_NAME}:scheduledjobs-cleanup
 - apiVersion: v1
   kind: ImageStream
   metadata:
     annotations:
       description: Resulting Docker Image after the build of my scheduled job.
     labels:
-      app: scheduled-jobs-cleanup
-    name: scheduled-jobs-cleanup
+      app: scheduledjobs-cleanup
+    name: scheduledjobs-cleanup
   spec:
     tags:
     - tag: latest
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    name: scheduledjob-cleanup-build
+    name: scheduledjobs-cleanup-build
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: scheduled-jobs-cleanup:latest
+        name: scheduledjobs-cleanup:latest
     runPolicy: Serial
     source:
       git:
@@ -65,7 +65,7 @@ objects:
 - apiVersion: batch/v2alpha1
   kind: ScheduledJob
   metadata:
-    name: scheduled-jobs-cleanup
+    name: scheduledjobs-cleanup
   spec:
     jobTemplate:
       spec:
@@ -73,10 +73,10 @@ objects:
           spec:
             activeDeadlineSeconds: 600
             containers:
-            - image: 172.30.220.103:5000/${PROJECT_NAME}/scheduled-jobs-cleanup:latest
-              name: scheduled-jobs-cleanup
+            - image: 172.30.220.103:5000/${PROJECT_NAME}/scheduledjobs-cleanup:latest
+              name: scheduledjobs-cleanup
             restartPolicy: OnFailure
-            serviceAccountName: scheduled-jobs-cleanup
+            serviceAccountName: scheduledjobs-cleanup
     schedule: ${SCHEDULE_VALUE}
 parameters:
 - description: Project Name used to create the RoleBindings
